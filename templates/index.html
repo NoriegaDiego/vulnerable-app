@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Catálogo General</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <!-- NAVBAR SUPERIOR ESTILO WALMART -->
+    <header class="bg-[#004c91] text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            
+            <!-- Logo / Marca -->
+            <div class="flex items-center gap-2">
+                <span class="text-2xl font-black tracking-wider bg-yellow-400 text-blue-900 px-2.5 py-1 rounded-lg">⚡ Tech</span>
+                <span class="text-xl font-bold hidden sm:inline">Store</span>
+            </div>
+
+            <!-- Selector de Entrega / Ubicación simulado -->
+            <div class="hidden md:flex items-center bg-blue-900/60 px-3 py-1.5 rounded-full text-xs gap-2 cursor-pointer hover:bg-blue-900 transition">
+                <span>📍</span>
+                <div>
+                    <p class="font-bold">¿Cómo quieres tus artículos?</p>
+                    <p class="text-blue-200">Aguascalientes, 20326</p>
+                </div>
+            </div>
+
+            <!-- Barra de Búsqueda Central -->
+            <div class="flex-1 max-w-xl relative">
+                <input type="text" placeholder="Buscar en TechStore en línea o en tienda..." class="w-full py-2 pl-4 pr-10 rounded-full text-gray-800 text-sm focus:outline-none shadow-inner">
+                <button class="absolute right-1 top-1/2 -translate-y-1/2 bg-[#002d62] text-white p-1.5 rounded-full px-3 text-xs">
+                    🔍
+                </button>
+            </div>
+
+            <!-- Secciones de cuenta y carrito -->
+            <div class="flex items-center gap-5 text-sm">
+                <div class="hidden lg:block cursor-pointer">
+                    <p class="text-xs text-blue-200">Vuelve a pedirlos</p>
+                    <p class="font-bold">Tus productos</p>
+                </div>
+
+                <div class="hidden lg:flex items-center gap-1 cursor-pointer">
+                    <span>👤</span>
+                    <div>
+                        <p class="text-xs text-blue-200">Iniciar sesión</p>
+                        <p class="font-bold">Cuenta</p>
+                    </div>
+                </div>
+
+                <!-- Enlace al Carrito -->
+                <a href="/carrito" class="flex items-center gap-2 bg-blue-800 hover:bg-blue-900 px-4 py-2 rounded-full transition font-bold">
+                    🛒 <span class="bg-yellow-400 text-blue-900 text-xs px-2 py-0.5 rounded-full">Ver</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Sub-barra de categorías -->
+        <nav class="bg-white text-gray-700 border-b border-gray-200 text-sm shadow-sm">
+            <div class="container mx-auto px-4 py-2 flex items-center gap-6 overflow-x-auto whitespace-nowrap">
+                <button class="font-bold flex items-center gap-1 text-[#004c91]">
+                    <span>📂</span> Departamentos ▾
+                </button>
+                <button class="font-bold flex items-center gap-1 text-[#004c91]">
+                    <span>⭐</span> Beneficios ▾
+                </button>
+                <a href="#" class="hover:text-blue-600">Ahorros</a>
+                <a href="#" class="hover:text-blue-600">Envío en horas</a>
+                <a href="#" class="hover:text-blue-600">Línea Blanca</a>
+                <a href="#" class="hover:text-blue-600">Computación</a>
+                <a href="#" class="hover:text-blue-600">Smartphones</a>
+                <a href="#" class="hover:text-blue-600">Audio y Video</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- TARJETA FLOTANTE / TOAST NOTIFICATION (Aparece al añadir un producto) -->
+    {% if added_item %}
+    <div id="toast-card" class="fixed top-20 right-6 z-50 bg-white border border-emerald-200 shadow-2xl rounded-2xl p-4 flex items-center gap-4 transition-all duration-500 transform translate-y-0 opacity-100 max-w-sm">
+        <div class="bg-emerald-100 text-emerald-600 rounded-full p-2.5 text-xl flex items-center justify-center shrink-0">
+            ✅
+        </div>
+        <div class="flex-1">
+            <p class="font-bold text-gray-900 text-sm">¡Agregado al carrito!</p>
+            <p class="text-xs text-gray-600 truncate max-w-[200px]">{{ added_item }}</p>
+        </div>
+        <a href="/carrito" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition shadow">
+            Ver
+        </a>
+    </div>
+
+    <script>
+        // Script para desvanecer y ocultar la tarjeta suavemente después de 3.5 segundos
+        setTimeout(() => {
+            const toast = document.getElementById('toast-card');
+            if (toast) {
+                // Aplicamos transición de salida (fade-out y desplazamiento hacia arriba)
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 500); // Se elimina del DOM al terminar la animación
+            }
+        }, 3500);
+    </script>
+    {% endif %}
+
+    <!-- CONTENIDO PRINCIPAL: CATÁLOGO TIPO CARRUSEL / GRID AMPLIO -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-black text-gray-900">🔥 Productos Destacados en Oferta</h2>
+            <span class="text-sm text-blue-600 font-semibold cursor-pointer hover:underline">Ver todo &gt;</span>
+        </div>
+
+        <!-- Contenedor con scroll horizontal tipo carrusel y adaptable en grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for id, prod in productos.items() %}
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden border border-gray-200 flex flex-col justify-between p-4">
+                <div>
+                    <!-- Imagen / Icono del producto -->
+                    <div class="bg-gray-100 h-44 rounded-xl flex items-center justify-center text-4xl mb-4">
+                        {{ prod.icono }}
+                    </div>
+                    <span class="text-xs bg-red-100 text-red-600 font-bold px-2.5 py-1 rounded-md">¡Ahorro exclusivo!</span>
+                    <h3 class="font-bold text-gray-800 text-base mt-2">{{ prod.nombre }}</h3>
+                    <p class="text-xs text-gray-500 mt-1">{{ prod.desc }}</p>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-gray-400 block line-through">${{ prod.precio * 1.2 | int }}</span>
+                        <span class="text-xl font-black text-[#004c91]">${{ prod.precio }} MXN</span>
+                    </div>
+                    <form action="/agregar/{{ id }}" method="POST">
+                        <button type="submit" class="bg-[#004c91] hover:bg-blue-800 text-white font-bold text-sm px-4 py-2 rounded-xl transition shadow">
+                            + Agregar
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="bg-white border-t py-6 text-center text-gray-400 text-xs mt-12">
+        Práctica Académica OWASP A02:2025 - Security Misconfiguration | Simulación de E-commerce
+    </footer>
+
+</body>
+</html>

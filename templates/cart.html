@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- NAVBAR SUPERIOR ESTILO WALMART -->
+    <header class="bg-[#004c91] text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            
+            <!-- Logo / Marca -->
+            <div class="flex items-center gap-2">
+                <span class="text-2xl font-black tracking-wider bg-yellow-400 text-blue-900 px-2.5 py-1 rounded-lg">⚡ Tech</span>
+                <span class="text-xl font-bold hidden sm:inline">Store</span>
+            </div>
+
+            <!-- Selector de Entrega / Ubicación simulado -->
+            <div class="hidden md:flex items-center bg-blue-900/60 px-3 py-1.5 rounded-full text-xs gap-2 cursor-pointer hover:bg-blue-900 transition">
+                <span>📍</span>
+                <div>
+                    <p class="font-bold">¿Cómo quieres tus artículos?</p>
+                    <p class="text-blue-200">Aguascalientes, 20326</p>
+                </div>
+            </div>
+
+            <!-- Barra de Búsqueda Central -->
+            <div class="flex-1 max-w-xl relative">
+                <input type="text" placeholder="Buscar en TechStore en línea o en tienda..." class="w-full py-2 pl-4 pr-10 rounded-full text-gray-800 text-sm focus:outline-none shadow-inner">
+                <button class="absolute right-1 top-1/2 -translate-y-1/2 bg-[#002d62] text-white p-1.5 rounded-full px-3 text-xs">
+                    🔍
+                </button>
+            </div>
+
+            <!-- Secciones de cuenta y carrito -->
+            <div class="flex items-center gap-5 text-sm">
+                <div class="hidden lg:block cursor-pointer">
+                    <p class="text-xs text-blue-200">Vuelve a pedirlos</p>
+                    <p class="font-bold">Tus productos</p>
+                </div>
+
+                <div class="hidden lg:flex items-center gap-1 cursor-pointer">
+                    <span>👤</span>
+                    <div>
+                        <p class="text-xs text-blue-200">Iniciar sesión</p>
+                        <p class="font-bold">Cuenta</p>
+                    </div>
+                </div>
+
+                <!-- Enlace al Carrito -->
+                <a href="/carrito" class="flex items-center gap-2 bg-blue-800 hover:bg-blue-900 px-4 py-2 rounded-full transition font-bold">
+                     <span class="bg-yellow-400 text-blue-900 text-xs px-2 py-0.5 rounded-full">Inicio</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Sub-barra de categorías -->
+        <nav class="bg-white text-gray-700 border-b border-gray-200 text-sm shadow-sm">
+            <div class="container mx-auto px-4 py-2 flex items-center gap-6 overflow-x-auto whitespace-nowrap">
+                <button class="font-bold flex items-center gap-1 text-[#004c91]">
+                    <span>📂</span> Departamentos ▾
+                </button>
+                <button class="font-bold flex items-center gap-1 text-[#004c91]">
+                    <span>⭐</span> Beneficios ▾
+                </button>
+                <a href="#" class="hover:text-blue-600">Ahorros</a>
+                <a href="#" class="hover:text-blue-600">Envío en horas</a>
+                <a href="#" class="hover:text-blue-600">Línea Blanca</a>
+                <a href="#" class="hover:text-blue-600">Computación</a>
+                <a href="#" class="hover:text-blue-600">Smartphones</a>
+                <a href="#" class="hover:text-blue-600">Audio y Video</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-10 max-w-2xl">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+            <h2 class="text-2xl font-bold mb-6">Resumen del Carrito</h2>
+
+            {% if carrito %}
+                <ul class="divide-y divide-gray-200 mb-6">
+                    {% for item in carrito %}
+                    <li class="py-3 flex justify-between items-center">
+                        <div>
+                            <span class="font-medium block">{{ item.nombre }}</span>
+                            <span class="text-gray-500 text-sm">${{ item.precio }} MXN</span>
+                        </div>
+                        <!-- Botón para quitar este producto específico -->
+                        <form action="/eliminar/{{ loop.index0 }}" method="POST">
+                            <button type="submit" class="text-red-500 hover:text-red-700 text-sm font-medium px-3 py-1 rounded-lg border border-red-200 hover:bg-red-50 transition">
+                                Eliminar
+                            </button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="border-t pt-4 flex justify-between items-center mb-8">
+                    <span class="text-xl font-bold">Total a pagar:</span>
+                    <span class="text-2xl font-black text-indigo-600">${{ total }} MXN</span>
+                </div>
+
+                <!-- Formulario de Pago (Campo 'total' ideal para interceptar con Burp Suite) -->
+                <form action="/checkout" method="POST">
+                    <input type="hidden" name="total" value="{{ total }}">
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition text-lg shadow-lg">
+                        Proceder al Pago
+                    </button>
+                </form>
+            {% else %}
+                <div class="text-center py-8">
+                    <p class="text-gray-500 mb-4">Tu carrito está vacío... 💭</p>
+                    <a href="/" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl transition font-medium">Volver a la tienda</a>
+                </div>
+
+                <!-- Botón Deshabilitado si el carrito está vacío -->
+                <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-3 rounded-xl cursor-not-allowed mt-6 text-lg">
+                    No hay productos para pagar :(
+                </button>
+            {% endif %}
+        </div>
+    </main>
+
+</body>
+</html>

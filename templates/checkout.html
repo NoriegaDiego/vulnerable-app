@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comprobante de Pago - TechStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <!-- Navbar superior corporativo -->
+    <header class="bg-[#004c91] text-white shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl font-black tracking-wider bg-yellow-400 text-blue-900 px-2.5 py-1 rounded-lg">⚡ Tech</span>
+                <span class="text-xl font-bold">Store - Pasarela de Pagos</span>
+            </div>
+            <span class="text-xs bg-emerald-600 text-white px-3 py-1 rounded-full font-semibold">🔒 Transacción Segura SSL</span>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal Estilo Recibo / Factura -->
+    <main class="container mx-auto px-4 py-10 max-w-3xl">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200 p-8">
+            
+            <!-- Encabezado del comprobante -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 pb-6 mb-6 gap-4">
+                <div>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Pago Aprobado Exitosamente</span>
+                    <h2 class="text-2xl font-black text-gray-900 mt-2">Comprobante de Transacción</h2>
+                    <p class="text-xs text-gray-500 mt-1">Folio de Operación: <span class="font-mono font-bold text-gray-700">#ORD-2026-88492</span></p>
+                </div>
+                <div class="text-left sm:text-right">
+                    <p class="text-xs text-gray-500">Fecha y Hora:</p>
+                    <p class="font-bold text-sm text-gray-800">02 de Noviembre, 2026 - 17:30 hrs</p>
+                </div>
+            </div>
+
+            <!-- Datos del Comprador y Método de Pago (Bloque de renglones) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-5 rounded-xl border border-gray-100 mb-8 text-sm">
+                <div>
+                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Datos del Comprador</p>
+                    <p class="font-bold text-gray-800">Cliente TechStore (Demo)</p>
+                    <p class="text-gray-600 text-xs">Aguascalientes, Ags. (20326)</p>
+                    <p class="text-gray-600 text-xs">usuario.demo@techstore.internal</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Método de Pago</p>
+                    <p class="font-bold text-gray-800">Tarjeta de Crédito / Débito</p>
+                    <p class="text-gray-600 text-xs">Terminación: <span class="font-mono">•••• 4092</span></p>
+                    <p class="text-gray-600 text-xs">Estatus Bancario: <span class="text-emerald-600 font-bold">Autorizado (OK)</span></p>
+                </div>
+            </div>
+
+            <!-- Tabla de Desglose -->
+            <div class="mb-8">
+                <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-3">Detalle del Cobro</h3>
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead class="bg-gray-100 text-gray-600 font-semibold text-xs uppercase">
+                            <tr>
+                                <th class="p-3">Concepto / Descripción</th>
+                                <th class="p-3 text-right">Monto Procesado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-gray-700">
+                            <tr>
+                                <td class="p-3">
+                                    <p class="font-bold">Pago Total de Carrito E-commerce</p>
+                                    <p class="text-xs text-gray-500">Incluye IVA y cargos de gestión digital por pasarela.</p>
+                                </td>
+                                <td class="p-3 text-right font-black text-lg text-[#004c91]">${{ monto }} MXN</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Nota informativa de seguridad -->
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-8 text-xs text-blue-800">
+                <p class="font-bold mb-1">ℹ️ Nota del Sistema:</p>
+                <p>La transacción se completó mediante el flujo regular de la tienda. Si el parámetro del monto hubiera sido alterado a ceros mediante herramientas de intercepción, el servidor habría bloqueado la solicitud lanzando la excepción de seguridad programada (OWASP A02).</p>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button onclick="window.print()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-xl transition text-center text-sm shadow-sm">
+                    🖨️ Imprimir / Guardar Recibo
+                </button>
+                <a href="/" class="flex-1 bg-[#004c91] hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition text-center text-sm shadow">
+                    Regresar al Catálogo
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="text-center py-6 text-gray-400 text-xs">
+        TechStore Secure Checkout Gateway v3.4 | Práctica Académica OWASP A02:2025
+    </footer>
+
+</body>
+</html>
