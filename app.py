@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_insegura_para_demo'
 
-# MODO DEBUG ACTIVO (Vulnerable para la demo)
+
 app.config['DEBUG'] = True
 
 PRODUCTOS = {
@@ -21,7 +21,7 @@ PRODUCTOS = {
 def index():
     if 'carrito' not in session:
         session['carrito'] = []
-    # Capturamos si viene un producto recién agregado en la URL
+    
     added_item = request.args.get('added')
     return render_template('index.html', productos=PRODUCTOS, added_item=added_item)
 
@@ -32,11 +32,11 @@ def agregar(id_prod):
         carrito = session.get('carrito', [])
         carrito.append(producto)
         session['carrito'] = carrito
-        # Redirigimos pasando el nombre del producto en la URL para la notificación
+        
         return redirect(url_for('index', added=producto['nombre']))
     return redirect(url_for('index'))
 
-# NUEVA RUTA: Eliminar producto del carrito por su índice
+
 @app.route('/eliminar/<int:index>', methods=['POST'])
 def eliminar(index):
     carrito = session.get('carrito', [])
@@ -55,7 +55,7 @@ def ver_carrito():
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
-    # Capturamos lo que llega por POST
+    
     monto_str = request.form.get('total')
     print(f"--- DEBUG BURP / CHECKOUT --- Valor recibido en 'total': {monto_str}")
     
@@ -64,12 +64,12 @@ def checkout():
     except (TypeError, ValueError):
         monto = 0.0
 
-    # VULNERABILIDAD: Si el monto es 0 o menor, truena la app (Simulando el ataque)
+   
     if monto <= 0:
         raise RuntimeError(f"Error crítico en pasarela de pagos SQL: Transacción inválida de ${monto}. Conexión rechazada en db.internal.local:5432.")
 
     session.pop('carrito', None)
-    return render_template('checkout.html', monto=monto)
+    return render_template('checkout_success.html', monto=monto)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5050, threaded=True)
